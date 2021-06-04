@@ -1,16 +1,33 @@
-import './App.css';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import Home from "./pages/Home";
+import Error404 from "./pages/Error404";
 
-function App() {
+export default function App() {
     return (
-        <div className="App">
-            <h1>Hi</h1>
-            <p>
-                Welcome to Nathan Adam's portfolio website.
-                <br /><br />
-                I still haven't come up with an idea for a design, so check back later. In the meantime, you can visit my projects website at <a href="https://schobbish.com">schobbish.com</a>.
-            </p>
-        </div>
+        <Router>
+            <div>
+                <nav class="hidden">
+                    <ul>
+                        <li>
+                            <Link to="/">Home</Link>
+                        </li>
+                    </ul>
+                </nav>
+
+                <Switch>
+                    <Route exact path="/">
+                        <Home />
+                    </Route>
+                    <Route path="*">
+                        <Error404 />
+                    </Route>
+                </Switch>
+            </div>
+        </Router>
     );
 }
-
-export default App;

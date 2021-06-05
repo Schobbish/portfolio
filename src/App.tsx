@@ -3,6 +3,7 @@ import { Switch, Route, Link } from "react-router-dom";
 
 import { Home } from "./pages/Home";
 import { Error404 } from "./pages/Error404";
+import "./App.css";
 
 export class App extends React.Component {
     render() {

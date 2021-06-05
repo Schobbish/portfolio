@@ -1,7 +1,5 @@
 import * as React from "react";
 
-import "../App.css";
-
 export class Home extends React.Component {
     render() {
         return (
@@ -13,7 +11,7 @@ export class Home extends React.Component {
                 <p>
                     I'm working on making a proper website right now, so check back later.
                     In the meantime, you can visit my projects website at&nbsp;
-                    <a className="text-blue-800 underline" href="https://schobbish.com">schobbish.com</a>.
+                    <a className="anc-def" href="https://schobbish.com">schobbish.com</a>.
                 </p>
             </div>
         )

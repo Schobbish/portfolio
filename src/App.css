@@ -1,1 +1,5 @@
-/* empty */
+@layer components {
+    .anc-def {
+        @apply text-blue-800 underline;
+    }
+}

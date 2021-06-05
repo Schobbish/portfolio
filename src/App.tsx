@@ -11,7 +11,7 @@ export default function App() {
     return (
         <Router>
             <div>
-                <nav class="hidden">
+                <nav className="hidden">
                     <ul>
                         <li>
                             <Link to="/">Home</Link>

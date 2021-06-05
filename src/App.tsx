@@ -1,16 +1,13 @@
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
-import Home from "./pages/Home";
-import Error404 from "./pages/Error404";
+import * as React from "react";
+import { Switch, Route, Link } from "react-router-dom";
 
-export default function App() {
-    return (
-        <Router>
-            <div>
+import { Home } from "./pages/Home";
+import { Error404 } from "./pages/Error404";
+
+export class App extends React.Component {
+    render() {
+        return (
+            <div className="App">
                 <nav className="hidden">
                     <ul>
                         <li>
@@ -28,6 +25,8 @@ export default function App() {
                     </Route>
                 </Switch>
             </div>
-        </Router>
-    );
+        );
+    }
 }
+
+export default App;

@@ -1,5 +1,5 @@
 @layer components {
-    .anc-def {
-        @apply text-blue-800 underline;
+    .App {
+        @apply m-10;
     }
 }

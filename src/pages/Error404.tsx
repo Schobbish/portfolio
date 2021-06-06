@@ -12,7 +12,7 @@ export class Error404 extends React.Component {
                 <p>
                     <Link to="/">Return home</Link>.
                 </p>
-                <p>
+                <p className="pt-8">
                     Thanks to <a href="https://github.com/rafgraph">Rafael Pedicini</a> for the <a href="https://github.com/rafgraph/spa-github-pages">script</a> used in this redirect.
                 </p>
             </div>

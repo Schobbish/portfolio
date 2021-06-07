@@ -10,6 +10,13 @@
         @apply pb-2;
     }
     a {
-        @apply text-blue-800 underline;
+        @apply text-purple underline;
+    }
+}
+
+@layer utilities {
+    .h-screen {
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
     }
 }

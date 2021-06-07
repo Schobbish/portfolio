@@ -8,7 +8,7 @@ import "./App.css";
 export class App extends React.Component {
     render() {
         return (
-            <div className="App">
+            <div className="app">
                 <nav className="hidden">
                     <ul>
                         <li>

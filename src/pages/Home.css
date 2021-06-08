@@ -3,8 +3,10 @@
         /* static borders: https://kovart.github.io/dashed-border-generator/ */
         background-image: repeating-linear-gradient(
             -45deg,
-            transparent 0 20px,
-            theme(colors.yellow) 20px 40px
+            transparent,
+            transparent 20px,
+            theme(colors.yellow) 20px,
+            theme(colors.yellow) 40px
         );
         background-repeat: no-repeat;
         background-size: calc(100% + 57px);

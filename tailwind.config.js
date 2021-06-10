@@ -1,3 +1,5 @@
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 module.exports = {
     purge: {
         content: ['./src/**/*.{js,jsx,ts,tsx}', './public/*.html'],
@@ -16,6 +18,11 @@ module.exports = {
             blue: "#66d9ef",
             purple: "#ae81ff"
         },
+        fontFamily: {
+            display: ["'Passion One'", ...defaultTheme.fontFamily.sans],
+            sans: [...defaultTheme.fontFamily.sans],
+            serif: ["Lora", ...defaultTheme.fontFamily.serif]
+        }
     },
     variants: {
         extend: {},

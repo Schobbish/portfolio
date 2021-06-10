@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 export class Error404 extends React.Component {
     render() {
         return (
-            <div className="error-404">
-                <h1>404 error</h1>
+            <div className="error-404 m-10">
+                <h1 className="text-5xl font-semibold pb-4">404 error</h1>
                 <p>
                     This is a 404 error page
                 </p>

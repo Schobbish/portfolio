@@ -1,0 +1,29 @@
+@layer components {
+    .animated-border {
+        /* static borders: https://kovart.github.io/dashed-border-generator/ */
+        background-image: repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 24px,
+            theme(colors.yellow) 24px,
+            theme(colors.yellow) 48px
+        );
+        background-size: calc(100% + 68px);
+    }
+
+    @media screen and (prefers-reduced-motion: no-preference) {
+        .animated-border {
+            animation: border-animation 3s linear infinite;
+        }
+    }
+
+    @keyframes border-animation {
+        from {
+            /* why 68? i don't know! */
+            background-position: -68px;
+        }
+        to {
+            background-position: 0;
+        }
+    }
+}

@@ -4,19 +4,23 @@
         background-image: repeating-linear-gradient(
             -45deg,
             transparent,
-            transparent 20px,
-            theme(colors.yellow) 20px,
-            theme(colors.yellow) 40px
+            transparent 24px,
+            theme(colors.yellow) 24px,
+            theme(colors.yellow) 48px
         );
-        background-repeat: no-repeat;
-        background-size: calc(100% + 57px);
-        animation: border-animation 3s linear infinite;
+        background-size: calc(100% + 68px);
+    }
+
+    @media screen and (prefers-reduced-motion: no-preference) {
+        .animated-border {
+            animation: border-animation 3s linear infinite;
+        }
     }
 
     @keyframes border-animation {
         from {
-            /* why 57? i don't know! */
-            background-position: -57px;
+            /* why 68? i don't know! */
+            background-position: -68px;
         }
         to {
             background-position: 0;

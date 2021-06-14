@@ -1,22 +1,16 @@
 import * as React from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 
 import { Home } from "./pages/Home";
 import { Error404 } from "./pages/Error404";
 import "./App.css";
 
+
+/** Render app */
 export class App extends React.Component {
     render() {
         return (
             <div className="app">
-                <nav className="hidden">
-                    <ul>
-                        <li>
-                            <Link to="/">Home</Link>
-                        </li>
-                    </ul>
-                </nav>
-
                 <Switch>
                     <Route exact path="/">
                         <Home />
@@ -29,5 +23,6 @@ export class App extends React.Component {
         );
     }
 }
+
 
 export default App;

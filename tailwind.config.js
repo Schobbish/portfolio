@@ -7,6 +7,7 @@ module.exports = {
     darkMode: false, // or 'media' or 'class'
     theme: {
         colors: {
+            // colors are also hardcoded in Home.tsx trapezoid buttons.
             white: "#f8f8f2",
             gray: "#272822",
             "brown-gray": "#49483e",

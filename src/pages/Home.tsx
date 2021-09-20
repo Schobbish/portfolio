@@ -55,8 +55,8 @@ class TrapezoidButton extends React.Component<TrapezoidButtonProps> {
     render() {
         return (
             <Link to={this.props.to}>
-                <div style={{backgroundImage: this.createBgImageString("white")}} className="trapezoid-button py-1 pr-1 w-36 lg:w-44 h-11">
-                    <div style={{backgroundImage: this.createBgImageString(this.props.color)}} className="trapezoid-button-inner p-1 pl-3 font-display text-xl text-white">
+                <div style={{backgroundImage: this.createBgImageString("white")}} className="trapezoid-button relative -left-4 py-1 pr-1 w-40 lg:w-48 h-11">
+                    <div style={{backgroundImage: this.createBgImageString(this.props.color)}} className="trapezoid-button-inner p-1 pl-7 font-display text-xl text-white">
                         {this.props.children}
                     </div>
                 </div>

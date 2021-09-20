@@ -16,6 +16,15 @@
         .animated-border {
             animation: border-animation 3s linear infinite;
         }
+        .trapezoid-button {
+            transition: transform 0.25s, filter 0.25s;
+        }
+        .trapezoid-button:hover {
+            transform: translateX(theme("spacing.4"));
+        }
+        .trapezoid-button:active {
+            filter: brightness(85%);
+        }
     }
 
     @keyframes border-animation {

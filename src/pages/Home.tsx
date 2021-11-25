@@ -1,18 +1,50 @@
 import * as React from "react";
+import * as ReactDOM from "react-dom";
 import { Link, LinkProps } from "react-router-dom";
 import debounce from "lodash.debounce";
+
+import { About } from "./About";
+import { Projects } from "./Projects";
+import { Contact } from "./Contact";
 import "./Home.css";
 
 
-/** Render home page */
+/** Main component for the home page. Also handles overlaid subpages. */
 export class Home extends React.Component {
+    state: { shownSubpage: string; };
+
+    /**
+     * Sets the default state and binds a function.
+     * @param props Passed to the React.Component constructor.
+     */
+    constructor(props: {} | Readonly<{}>) {
+        super(props);
+
+        this.updateShownSubpage = this.updateShownSubpage.bind(this);
+        this.state = { shownSubpage: "/" };
+    }
+
+    /**
+     * Updates the state to show the overlaid subpage when a link is clicked.
+     * @param event The onClick event from the clicked link.
+     * @param to The path to the subpage to be shown (technically determined in
+     *           SubpageOverlay.render())
+     */
+    // TODO: support back/forward buttons
+    updateShownSubpage(event: React.MouseEvent, to: LinkProps["to"]) {
+        event.preventDefault();
+        this.setState({ shownSubpage: to });
+        window.history.pushState("state?", document.title, to.toString());
+        console.log(window.history);
+    }
+
     render() {
         return (
             <div className="home p-10 h-screen bg-gray">
                 <nav className="absolute bottom-0 left-0 grid grid-rows-3 gap-4 place-items-start mb-8 lg:mb-16">
-                    <TrapezoidButton to="/about" color="#f92672">About</TrapezoidButton>
-                    <TrapezoidButton to="/projects" color="#66d9ef">Projects</TrapezoidButton>
-                    <TrapezoidButton to="/contact" color="#a6e22e">Contact</TrapezoidButton>
+                    <TrapezoidButton to="/about" color="#f92672" onClick={this.updateShownSubpage}>About</TrapezoidButton>
+                    <TrapezoidButton to="/projects" color="#66d9ef" onClick={this.updateShownSubpage}>Projects</TrapezoidButton>
+                    <TrapezoidButton to="/contact" color="#a6e22e" onClick={this.updateShownSubpage}>Contact</TrapezoidButton>
                 </nav>
                 <AnimatedBorder>
                     <div className="flex justify-center items-center h-full">
@@ -22,6 +54,7 @@ export class Home extends React.Component {
                         </div>
                     </div>
                 </AnimatedBorder>
+                <SubpageOverlay subpage={this.state.shownSubpage} />
             </div>
         )
     };
@@ -54,7 +87,7 @@ class TrapezoidButton extends React.Component<TrapezoidButtonProps> {
 
     render() {
         return (
-            <Link to={this.props.to}>
+            <Link to={this.props.to} onClick={event => this.props.onClick(event, this.props.to)}>
                 <div style={{backgroundImage: this.createBgImageString("white")}} className="trapezoid-button relative -left-4 py-1 pr-1 w-40 lg:w-48 h-11">
                     <div style={{backgroundImage: this.createBgImageString(this.props.color)}} className="trapezoid-button-inner p-1 pl-7 font-display text-xl text-white">
                         {this.props.children}
@@ -68,7 +101,67 @@ type TrapezoidButtonProps = {
     /** `to` prop passed to React Router's Link */
     to: LinkProps["to"],
     /** One of the tailwind theme colors */
-    color: string
+    color: string,
+    /**
+     * Handler called when button is clicked on.
+     * @param event The typical onClick event.
+     * @param to The value of the `to` prop.
+     */
+    onClick: (event: React.MouseEvent, to: LinkProps["to"]) => void
+}
+
+
+/**
+ * Handles the technicalities of creating an overlay which is appended at a
+ *  sibling of the app's root container.
+ */
+// may want to combine with the Home component?
+class SubpageOverlay extends React.Component<SubpageOverlayProps> {
+    container;
+    overlayRoot;
+
+    /**
+     * Sets the root and container of the subpage.
+     * @param props Passed to the React.Component constructor.
+     */
+    constructor(props: SubpageOverlayProps | Readonly<SubpageOverlayProps>) {
+        super(props)
+
+        this.overlayRoot = document.getElementById("overlay-root");
+        this.container = document.createElement("div");
+    }
+
+    /** Adds the subpage container to its root */
+    componentDidMount() {
+        this.overlayRoot?.appendChild(this.container);
+    }
+
+    /** Removes the subpage container from its root */
+    componentWillUnmount() {
+        this.overlayRoot?.removeChild(this.container);
+    }
+
+    render() {
+        switch (this.props.subpage) {
+            case "/about":
+            case "/about/":
+                return ReactDOM.createPortal(<About overlay />, this.container);
+            case "/projects":
+            case "/projects/":
+                return ReactDOM.createPortal(<Projects overlay />, this.container);
+            case "/contact":
+            case "/contact/":
+                return ReactDOM.createPortal(<Contact overlay />, this.container);
+        }
+        return null;
+    }
+}
+type SubpageOverlayProps = {
+    /**
+     * Detemines the subpage to show. Should be consistent with the routing
+     *  set up in the App component.
+     */
+    subpage: LinkProps["to"]
 }
 
 

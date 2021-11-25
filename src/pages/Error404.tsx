@@ -2,7 +2,7 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 
-/** Render 404 page */
+/** Main component for the 404 error page. */
 export class Error404 extends React.Component {
     render() {
         return (

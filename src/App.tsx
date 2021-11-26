@@ -11,29 +11,29 @@ import "./App.css";
 
 /** Main app class which routes to the various pages. */
 export class App extends React.Component {
-    render() {
-        return (
-            <div className="app">
-                <Switch>
-                    <Route exact path="/">
-                        <Home />
-                    </Route>
-                    <Route path="/about">
-                        <About />
-                    </Route>
-                    <Route path="/projects">
-                        <Projects />
-                    </Route>
-                    <Route path="/contact">
-                        <Contact />
-                    </Route>
-                    <Route path="*">
-                        <Error404 />
-                    </Route>
-                </Switch>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="app">
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/projects">
+            <Projects />
+          </Route>
+          <Route path="/contact">
+            <Contact />
+          </Route>
+          <Route path="*">
+            <Error404 />
+          </Route>
+        </Switch>
+      </div>
+    );
+  }
 }
 
 

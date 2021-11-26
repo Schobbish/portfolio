@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 @layer utilities {
-    .h-screen {
-        height: 100vh;
-        height: calc(var(--vh, 1vh) * 100);
-    }
-    .anc-def {
-        @apply text-purple underline;
-    }
+  .h-screen {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+  }
+  .anc-def {
+    @apply text-purple underline;
+  }
 }

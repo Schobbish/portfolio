@@ -1,60 +1,60 @@
 @layer components {
+  .animated-border {
+    /* static borders: https://kovart.github.io/dashed-border-generator/ */
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 24px,
+      theme(colors.yellow) 24px,
+      theme(colors.yellow) 48px
+    );
+    background-size: calc(100% + 68px);
+  }
+
+  /* reducing motion is probably unnecessary but i feel clever doing it */
+  @media screen and (prefers-reduced-motion: no-preference) {
     .animated-border {
-        /* static borders: https://kovart.github.io/dashed-border-generator/ */
-        background-image: repeating-linear-gradient(
-            -45deg,
-            transparent,
-            transparent 24px,
-            theme(colors.yellow) 24px,
-            theme(colors.yellow) 48px
-        );
-        background-size: calc(100% + 68px);
+      animation: border-animation 3s linear infinite;
     }
-
-    /* reducing motion is probably unnecessary but i feel clever doing it */
-    @media screen and (prefers-reduced-motion: no-preference) {
-        .animated-border {
-            animation: border-animation 3s linear infinite;
-        }
-        .trapezoid-button {
-            transition: transform 0.25s, filter 0.25s;
-        }
-        .trapezoid-button:hover {
-            transform: translateX(theme("spacing.4"));
-        }
-        .trapezoid-button:active {
-            filter: brightness(85%);
-        }
-    }
-
-    @keyframes border-animation {
-        from {
-            /* why 68? i don't know! seems to work well on most browsers */
-            background-position: -68px;
-        }
-        to {
-            background-position: 0;
-        }
-    }
-
-    /* these are set in javascript but kept because it's easier to read here */
-    /*
     .trapezoid-button {
-        background-image: linear-gradient(
-            -80deg,
-            transparent,
-            transparent 5%,
-            theme(colors.white) 5%,
-            theme(colors.white) 100%
-        );
+      transition: transform 0.25s, filter 0.25s;
     }
-    .trapezoid-button-inner {
-        background-image: linear-gradient(
-            -80deg,
-            transparent,
-            transparent 5%,
-            theme(colors.blue) 5%,
-            theme(colors.blue) 100%
-        );
-    }*/
+    .trapezoid-button:hover {
+      transform: translateX(theme("spacing.4"));
+    }
+    .trapezoid-button:active {
+      filter: brightness(85%);
+    }
+  }
+
+  @keyframes border-animation {
+    from {
+      /* why 68? i don't know! seems to work well on most browsers */
+      background-position: -68px;
+    }
+    to {
+      background-position: 0;
+    }
+  }
+
+  /* these are set in javascript but kept because it's easier to read here */
+  /*
+  .trapezoid-button {
+    background-image: linear-gradient(
+      -80deg,
+      transparent,
+      transparent 5%,
+      theme(colors.white) 5%,
+      theme(colors.white) 100%
+    );
+  }
+  .trapezoid-button-inner {
+    background-image: linear-gradient(
+      -80deg,
+      transparent,
+      transparent 5%,
+      theme(colors.blue) 5%,
+      theme(colors.blue) 100%
+    );
+  }*/
 }

@@ -26,7 +26,12 @@ module.exports = {
     }
   },
   variants: {
-    extend: {},
+    extend: {
+      filter: ["active"],
+      brightness: ["active"],
+      transitionProperty: ["motion-safe"],
+      transform: ["motion-safe"]
+    }
   },
   plugins: [],
 }

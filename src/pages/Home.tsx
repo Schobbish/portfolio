@@ -10,9 +10,7 @@ import "./Home.css";
 
 
 /** Main component for the home page. Also handles overlaid subpages. */
-export class Home extends React.Component {
-  state: { shownSubpage: string; };
-
+export class Home extends React.Component<{}, HomeState> {
   /**
    * Sets the default state and binds a function.
    * @param props Passed to the React.Component constructor.
@@ -20,8 +18,8 @@ export class Home extends React.Component {
   constructor(props: {} | Readonly<{}>) {
     super(props);
 
-    this.updateShownSubpage = this.updateShownSubpage.bind(this);
     this.state = { shownSubpage: "/" };
+    this.updateShownSubpage = this.updateShownSubpage.bind(this);
   }
 
   /**
@@ -32,8 +30,9 @@ export class Home extends React.Component {
    */
   // TODO: support back/forward buttons
   updateShownSubpage(event: React.MouseEvent, to: LinkProps["to"]) {
+    console.log(to);
     event.preventDefault();
-    this.setState({ shownSubpage: to });
+    this.setState({ shownSubpage: to.toString() });
     window.history.pushState("state?", document.title, to.toString());
     console.log(window.history);
   }
@@ -54,10 +53,17 @@ export class Home extends React.Component {
             </div>
           </div>
         </AnimatedBorder>
-        <SubpageOverlay subpage={this.state.shownSubpage} />
+        <SubpageOverlay subpage={this.state.shownSubpage} onClickUnmountSubpageHandler={this.updateShownSubpage}/>
       </div>
     )
   };
+}
+type HomeState = {
+  /**
+   * Determines which subpage, if any, is being shown. If equal to "/", no
+   *  subpage is shown because we are on the root page.
+   */
+  shownSubpage: string;
 }
 
 
@@ -117,8 +123,8 @@ type TrapezoidButtonProps = {
  */
 // may want to combine with the Home component?
 class SubpageOverlay extends React.Component<SubpageOverlayProps> {
-  container;
-  overlayRoot;
+  overlayRoot: HTMLElement | null;
+  container: HTMLElement;
 
   /**
    * Sets the root and container of the subpage.
@@ -145,13 +151,13 @@ class SubpageOverlay extends React.Component<SubpageOverlayProps> {
     switch (this.props.subpage) {
       case "/about":
       case "/about/":
-        return ReactDOM.createPortal(<About overlay />, this.container);
+        return ReactDOM.createPortal(<About overlay onClickUnmountSubpageHandler={this.props.onClickUnmountSubpageHandler}/>, this.container);
       case "/projects":
       case "/projects/":
-        return ReactDOM.createPortal(<Projects overlay />, this.container);
+        return ReactDOM.createPortal(<Projects overlay onClickUnmountSubpageHandler={this.props.onClickUnmountSubpageHandler}/>, this.container);
       case "/contact":
       case "/contact/":
-        return ReactDOM.createPortal(<Contact overlay />, this.container);
+        return ReactDOM.createPortal(<Contact overlay onClickUnmountSubpageHandler={this.props.onClickUnmountSubpageHandler}/>, this.container);
     }
     return null;
   }
@@ -161,7 +167,12 @@ type SubpageOverlayProps = {
    * Detemines the subpage to show. Should be consistent with the routing
    *  set up in the App component.
    */
-  subpage: LinkProps["to"]
+  subpage: LinkProps["to"],
+  /**
+   * Function which gets passed onto the subpage's SubpageContainer.
+   * @see SubpageContainerProps.onClickUnmountSubpageHandler
+   */
+  onClickUnmountSubpageHandler: (event: React.MouseEvent, to: LinkProps["to"]) => void
 }
 
 

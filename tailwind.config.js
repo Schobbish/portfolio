@@ -8,6 +8,7 @@ module.exports = {
   theme: {
     colors: {
       // colors are also hardcoded in Home.tsx trapezoid buttons.
+      transparent: "transparent",
       white: "#f8f8f2",
       gray: "#272822",
       "brown-gray": "#49483e",
@@ -17,7 +18,8 @@ module.exports = {
       yellow: "#e6db74",
       green: "#a6e22e",
       blue: "#66d9ef",
-      purple: "#ae81ff"
+      purple: "#ae81ff",
+      black: "#000000"
     },
     fontFamily: {
       display: ["'Passion One'", ...defaultTheme.fontFamily.sans],
@@ -29,8 +31,9 @@ module.exports = {
     extend: {
       filter: ["active"],
       brightness: ["active"],
-      transitionProperty: ["motion-safe"],
-      transform: ["motion-safe"]
+      opacity: ["motion-reduce"],
+      transitionProperty: ["motion-reduce", "motion-safe"],
+      transform: ["motion-reduce", "motion-safe"]
     }
   },
   plugins: [],

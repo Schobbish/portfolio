@@ -1,4 +1,14 @@
+/* for some reason this file is global which is a blessing and a curse */
 @layer components {
+  /* proper subpages need "overflow-scroll h-screen" classes as workaround */
+  body {
+    overflow: hidden;
+  }
+  /* disable ios blinky thing */
+  .overlay-exit, .trapezoid-button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   .animated-border {
     /* static borders: https://kovart.github.io/dashed-border-generator/ */
     background-image: repeating-linear-gradient(

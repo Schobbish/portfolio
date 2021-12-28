@@ -54,9 +54,9 @@ export class SubpageContainer extends React.Component<SubpageContainerProps, Sub
       >
         <Transition.Child
           as={Link}
+          className="overlay-exit fixed inset-0 bg-black"
           to="/"
           onClick={this.unmountSubpage}
-          className="fixed inset-0 bg-black"
 
           enter="transition-opacity duration-300"
           enterFrom="opacity-0"
@@ -68,7 +68,7 @@ export class SubpageContainer extends React.Component<SubpageContainerProps, Sub
           afterLeave={this.callUnmountHandler}
         />
         <Transition.Child
-          className="fixed left-1/2 mt-32 w-11/12 max-w-4xl h-full bg-yellow rounded-3xl"
+          className="overflow-scroll fixed left-1/2 mt-32 w-11/12 max-w-4xl h-full bg-yellow rounded-3xl"
 
           enter="motion-safe:transition-transform motion-reduce:transition-opacity duration-700 transform"
           enterFrom="-translate-x-1/2 translate-y-full opacity-0"
@@ -85,7 +85,7 @@ export class SubpageContainer extends React.Component<SubpageContainerProps, Sub
         </Transition.Child>
       </Transition>
     ) : (
-      <div>
+      <div className="overflow-scroll h-screen">
         {this.props.children}
         <br />
         as own page

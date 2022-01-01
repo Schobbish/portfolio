@@ -1,11 +1,12 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { Link, LinkProps } from "react-router-dom";
+import { LinkProps } from "react-router-dom";
 import debounce from "lodash.debounce";
 
 import { About } from "./About";
 import { Projects } from "./Projects";
 import { Contact } from "./Contact";
+import { TrapezoidButton } from "../components/TrapezoidButton";
 import "./Home.css";
 
 
@@ -40,7 +41,7 @@ export class Home extends React.Component<{}, HomeState> {
   render() {
     return (
       <div className="home p-10 h-screen bg-gray">
-        <nav className="absolute bottom-0 left-0 grid grid-rows-3 gap-4 place-items-start mb-8 lg:mb-16">
+        <nav className="absolute bottom-0 -left-5 grid grid-rows-3 gap-4 place-items-start mb-8 lg:mb-16">
           <TrapezoidButton to="/about" color="#f92672" onClick={this.updateShownSubpage}>About</TrapezoidButton>
           <TrapezoidButton to="/projects" color="#66d9ef" onClick={this.updateShownSubpage}>Projects</TrapezoidButton>
           <TrapezoidButton to="/contact" color="#a6e22e" onClick={this.updateShownSubpage}>Contact</TrapezoidButton>
@@ -81,39 +82,6 @@ class AnimatedBorder extends React.Component {
       </div>
     )
   }
-}
-
-
-/** Trapezoid-shaped button for main nav buttons */
-class TrapezoidButton extends React.Component<TrapezoidButtonProps> {
-  /** Uses the `color` to create the background gradient of that color */
-  private createBgImageString(color: string): string {
-    return `linear-gradient(-80deg, transparent, transparent 6%, ${color} 6%, ${color} 100%)`;
-  }
-
-  render() {
-    return (
-      <Link className="trapezoid-button" to={this.props.to} onClick={event => this.props.onClick(event, this.props.to)}>
-        <div className="relative -left-4 py-1 pr-1 w-40 lg:w-48 h-11 active:filter active:brightness-75 motion-safe:transition-all duration-200 motion-safe:transform hover:translate-x-4" style={{ backgroundImage: this.createBgImageString("white") }}>
-          <div className="p-1 pl-7 font-display text-xl text-white" style={{ backgroundImage: this.createBgImageString(this.props.color) }}>
-            {this.props.children}
-          </div>
-        </div>
-      </Link>
-    )
-  }
-}
-type TrapezoidButtonProps = {
-  /** `to` prop passed to React Router's Link */
-  to: LinkProps["to"],
-  /** One of the tailwind theme colors */
-  color: string,
-  /**
-   * Handler called when button is clicked on.
-   * @param event The typical onClick event.
-   * @param to The value of the `to` prop.
-   */
-  onClick: (event: React.MouseEvent, to: LinkProps["to"]) => void
 }
 
 

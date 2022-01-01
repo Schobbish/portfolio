@@ -2,6 +2,8 @@ import * as React from "react";
 import { Link, LinkProps } from "react-router-dom";
 import { Transition } from "@headlessui/react";
 
+import { TrapezoidButton } from "./TrapezoidButton";
+
 
 /**
  * Determines styles and animations based on whether its children should be
@@ -68,27 +70,42 @@ export class SubpageContainer extends React.Component<SubpageContainerProps, Sub
           afterLeave={this.callUnmountHandler}
         />
         <Transition.Child
-          className="overflow-scroll fixed left-1/2 mt-32 w-11/12 max-w-4xl h-full bg-yellow rounded-3xl"
+          className="overflow-y-scroll fixed left-1/2 flex flex-col items-end mt-24 w-11/12 max-w-4xl h-full bg-yellow rounded-3xl"
 
           enter="motion-safe:transition-transform motion-reduce:transition-opacity duration-700 transform"
           enterFrom="-translate-x-1/2 translate-y-full opacity-0"
           enterTo="-translate-x-1/2 translate-y-0 opacity-100"
           entered="-translate-x-1/2 transform opacity-100"
-          // TODO: figure out fade out
+          // TODO: figure out reduced motion fade out
           leave="transition motion-reduce:transition-none duration-700 transform"
           leaveFrom="-translate-x-1/2 translate-y-0"
           leaveTo="-translate-x-1/2 translate-y-full"
         >
-          {this.props.children}
-          <br />
-          as overlay
+          <button className="p-4 w-16 h-16 text-3xl leading-none" onClick={this.unmountSubpage} aria-label="close subpage">&times;</button>
+          <div className="p-4 pt-0 mb-32 w-full font-serif">
+            {this.props.children}
+            <br />
+            as overlay
+          </div>
         </Transition.Child>
       </Transition>
     ) : (
-      <div className="overflow-scroll h-screen">
-        {this.props.children}
-        <br />
-        as own page
+      <div className="overflow-y-scroll h-screen bg-gray">
+        <div className="flex flex-col items-center">
+          <nav className="flex flex-col items-center mb-8">
+            <Link to="/" className="mt-4 font-display text-6xl sm:text-7xl md:text-8xl 2xl:text-9xl text-yellow">NATHAN ADAM</Link>
+            <div className="flex gap-10">
+                <TrapezoidButton to="/about" color="#f92672">About</TrapezoidButton>
+                <TrapezoidButton to="/projects" color="#66d9ef">Projects</TrapezoidButton>
+                <TrapezoidButton to="/contact" color="#a6e22e">Contact</TrapezoidButton>
+            </div>
+          </nav>
+          <div className="min-h-screen p-4 pb-16 w-11/12 max-w-4xl font-serif bg-yellow rounded-t-3xl">
+            {this.props.children}
+            <br />
+            as own page
+          </div>
+        </div>
       </div>
     )
   }
@@ -118,5 +135,6 @@ type SubpageContainerState = {
    */
   subpageShown: boolean
 }
+
 
 export default SubpageContainer;

@@ -1,0 +1,5 @@
+@layer components {
+  .std-404-a {
+    @apply text-purple underline;
+  }
+}

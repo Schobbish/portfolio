@@ -7,7 +7,6 @@ import { About } from "./About";
 import { Projects } from "./Projects";
 import { Contact } from "./Contact";
 import { TrapezoidButton } from "../components/TrapezoidButton";
-import "./Home.css";
 
 
 /** Main component for the home page. Also handles overlaid subpages. */
@@ -49,7 +48,7 @@ export class Home extends React.Component<{}, HomeState> {
         <AnimatedBorder>
           <div className="flex justify-center items-center h-full">
             <div className="p-20 text-center text-yellow">
-              <h1 className="font-display text-6xl sm:text-7xl md:text-8xl 2xl:text-9xl">NATHAN ADAM</h1>
+              <h1 className="std-h1">NATHAN ADAM</h1>
               <p className="font-serif 2xl:text-lg">Website under construction<a className="underline" href="https://schobbish.com/">.</a></p>
             </div>
           </div>

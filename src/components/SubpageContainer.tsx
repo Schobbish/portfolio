@@ -4,7 +4,6 @@ import { Transition } from "@headlessui/react";
 
 import { TrapezoidButton } from "./TrapezoidButton";
 
-
 /**
  * Determines styles and animations based on whether its children should be
  *  rendered as an overlaid or standalone page.
@@ -128,7 +127,9 @@ export class SubpageContainer extends React.Component<SubpageContainerProps, Sub
       <div className="overflow-y-scroll h-screen bg-gray">
         <div className="flex flex-col items-center">
           <nav className="flex flex-col items-center mb-8">
-            <Link to="/" className="mt-4 font-display text-6xl sm:text-7xl md:text-8xl 2xl:text-9xl text-yellow">NATHAN ADAM</Link>
+            <h1 className="std-h1 mt-4 text-yellow">
+              <Link to="/">NATHAN ADAM</Link>
+            </h1>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-10">
                 <TrapezoidButton to="/about" color="#f92672">About</TrapezoidButton>
                 <TrapezoidButton to="/projects" color="#66d9ef">Projects</TrapezoidButton>

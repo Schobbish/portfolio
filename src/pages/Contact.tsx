@@ -7,7 +7,7 @@ export class Contact extends React.Component<SubpageContainerProps> {
   render() {
     return (
       <SubpageContainer overlay={this.props.overlay} onClickUnmountSubpageHandler={this.props.onClickUnmountSubpageHandler}>
-        Contact page
+        <h2 className="std-h2">Contact Me</h2>
       </SubpageContainer>
     );
   }

@@ -11,7 +11,9 @@ import { TrapezoidButton } from "./TrapezoidButton";
  */
 export class SubpageContainer extends React.Component<SubpageContainerProps, SubpageContainerState> {
   /** The event which unmounts the component. */
-  unmountClickEvent: React.MouseEvent | null = null;
+  unmountClickEvent: React.MouseEvent | KeyboardEvent | null = null;
+  /** Ref to button which closes the subpage. */
+  closeButton: React.RefObject<HTMLButtonElement>;
 
   /**
    * Sets the default state and binds functions.
@@ -21,15 +23,41 @@ export class SubpageContainer extends React.Component<SubpageContainerProps, Sub
     super(props);
 
     this.state = { subpageShown: this.props.overlay as boolean };
+    this.componentDidMount = this.componentDidMount.bind(this);
+    this.componentWillUnmount = this.componentWillUnmount.bind(this);
+    this.subpageKeyboardHandler = this.subpageKeyboardHandler.bind(this);
     this.unmountSubpage = this.unmountSubpage.bind(this);
     this.callUnmountHandler = this.callUnmountHandler.bind(this);
+    this.closeButton = React.createRef();
+  }
+
+  /** Bind keyboard handler */
+  componentDidMount() {
+    document.addEventListener("keydown", this.subpageKeyboardHandler, false);
+  }
+
+  /** Unbind keyboard handler */
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.subpageKeyboardHandler, false);
+  }
+
+  /**
+   * Function to handle global keyboard events.
+   * @param event The KeyboardEvent causing this event.
+   */
+  subpageKeyboardHandler(event: KeyboardEvent) {
+    switch (event.key) {
+      case "Escape":
+        this.unmountSubpage(event);
+        break;
+    }
   }
 
   /**
    * Prepares to unmount by setting `this.state.subpageShown` to false.
    * @param event The event which caused the subpage to unmount.
    */
-  unmountSubpage(event: React.MouseEvent) {
+  unmountSubpage(event: React.MouseEvent | KeyboardEvent) {
     event.preventDefault();
     this.setState({ subpageShown: false });
     this.unmountClickEvent = event;
@@ -40,7 +68,6 @@ export class SubpageContainer extends React.Component<SubpageContainerProps, Sub
    *  transitioning out of view.
    */
   callUnmountHandler() {
-    console.log(this.unmountClickEvent)
     if (this.unmountClickEvent)
       this.props.onClickUnmountSubpageHandler?.(this.unmountClickEvent, "/");
   }
@@ -49,6 +76,7 @@ export class SubpageContainer extends React.Component<SubpageContainerProps, Sub
     return this.props.overlay ? (
       <Transition
         className="subpage-container absolute inset-0"
+        aria-modal="true"
 
         show={this.state.subpageShown}
         appear={true}
@@ -72,20 +100,27 @@ export class SubpageContainer extends React.Component<SubpageContainerProps, Sub
         <Transition.Child
           className="overflow-y-scroll fixed left-1/2 flex flex-col items-end mt-24 w-11/12 max-w-4xl h-full bg-yellow rounded-3xl"
 
-          enter="motion-safe:transition-transform motion-reduce:transition-opacity duration-700 transform"
-          enterFrom="-translate-x-1/2 translate-y-full opacity-0"
-          enterTo="-translate-x-1/2 translate-y-0 opacity-100"
+          enter="motion-safe:transition-transform motion-reduce:transition-opacity duration-700 transform -translate-x-1/2 "
+          enterFrom="translate-y-full opacity-0"
+          enterTo="translate-y-0 opacity-100"
           entered="-translate-x-1/2 transform opacity-100"
+          afterEnter={() => this.closeButton.current?.focus()}
+
           // TODO: figure out reduced motion fade out
-          leave="transition motion-reduce:transition-none duration-700 transform"
-          leaveFrom="-translate-x-1/2 translate-y-0"
-          leaveTo="-translate-x-1/2 translate-y-full"
+          leave="transition motion-reduce:transition-none duration-700 transform -translate-x-1/2"
+          leaveFrom="translate-y-0"
+          leaveTo="translate-y-full"
         >
-          <button className="p-4 w-16 h-16 text-3xl leading-none" onClick={this.unmountSubpage} aria-label="close subpage">&times;</button>
-          <div className="p-4 pt-0 mb-32 w-full font-serif">
+          <button
+            className="p-4 w-16 h-16 text-3xl leading-none"
+            ref={this.closeButton}
+            onClick={this.unmountSubpage}
+            aria-label="close subpage"
+          >
+            &times;
+          </button>
+          <div className="p-5 pt-0 mb-32 w-full font-serif">
             {this.props.children}
-            <br />
-            as overlay
           </div>
         </Transition.Child>
       </Transition>
@@ -94,16 +129,14 @@ export class SubpageContainer extends React.Component<SubpageContainerProps, Sub
         <div className="flex flex-col items-center">
           <nav className="flex flex-col items-center mb-8">
             <Link to="/" className="mt-4 font-display text-6xl sm:text-7xl md:text-8xl 2xl:text-9xl text-yellow">NATHAN ADAM</Link>
-            <div className="flex gap-10">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-10">
                 <TrapezoidButton to="/about" color="#f92672">About</TrapezoidButton>
                 <TrapezoidButton to="/projects" color="#66d9ef">Projects</TrapezoidButton>
                 <TrapezoidButton to="/contact" color="#a6e22e">Contact</TrapezoidButton>
             </div>
           </nav>
-          <div className="min-h-screen p-4 pb-16 w-11/12 max-w-4xl font-serif bg-yellow rounded-t-3xl">
+          <div className="min-h-screen p-5 pb-16 w-11/12 max-w-4xl font-serif bg-yellow rounded-t-3xl">
             {this.props.children}
-            <br />
-            as own page
           </div>
         </div>
       </div>
@@ -126,7 +159,7 @@ export type SubpageContainerProps = {
    *              preventDefault will have already been called on this.
    * @param to The path to the new subpage or root.
    */
-  onClickUnmountSubpageHandler?: (event: React.MouseEvent, to: LinkProps["to"]) => void
+  onClickUnmountSubpageHandler?: (event: React.MouseEvent | KeyboardEvent, to: LinkProps["to"]) => void
 }
 type SubpageContainerState = {
   /**

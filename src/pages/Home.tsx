@@ -30,7 +30,7 @@ export class Home extends React.Component<{}, HomeState> {
    *       SubpageOverlay.render())
    */
   // TODO: support back/forward buttons
-  updateShownSubpage(event: React.MouseEvent, to: LinkProps["to"]) {
+  updateShownSubpage(event: React.MouseEvent | KeyboardEvent, to: LinkProps["to"]) {
     console.log(to);
     event.preventDefault();
     this.setState({ shownSubpage: to.toString() });
@@ -140,7 +140,7 @@ type SubpageOverlayProps = {
    * Function which gets passed onto the subpage's SubpageContainer.
    * @see SubpageContainerProps.onClickUnmountSubpageHandler
    */
-  onClickUnmountSubpageHandler: (event: React.MouseEvent, to: LinkProps["to"]) => void
+  onClickUnmountSubpageHandler: (event: React.MouseEvent | KeyboardEvent, to: LinkProps["to"]) => void
 }
 
 

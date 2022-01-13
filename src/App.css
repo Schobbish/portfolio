@@ -9,7 +9,10 @@
     @apply font-display text-6xl sm:text-7xl md:text-8xl 2xl:text-9xl;
   }
   .std-h2 {
-    @apply font-display text-4xl sm:text-6xl text-gray;
+    @apply mb-3 font-display text-4xl sm:text-6xl text-gray;
+  }
+  .std-h3 {
+    @apply font-display text-2xl sm:text-3xl text-gray
   }
 
   /* disable ios blinky thing */

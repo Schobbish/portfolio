@@ -10,19 +10,27 @@ export class TrapezoidButton extends React.Component<TrapezoidButtonProps> {
   }
 
   render() {
-    return (
-      <Link className="trapezoid-button" to={this.props.to} onClick={event => this.props.onClick?.(event, this.props.to)}>
-        <div className="p-1 w-40 lg:w-48 h-11 active:filter active:brightness-75 motion-safe:transition-transform duration-200 motion-safe:transform hover:translate-x-4" style={{ backgroundImage: this.createBgImageString("white") }}>
-          <div className="p-1 pl-7 font-display text-xl text-white" style={{ backgroundImage: this.createBgImageString(this.props.color) }}>
-            {this.props.children}
-          </div>
+    // this will be the child of the Link or anchor element
+    const linkChild = (
+      <div className="p-1 w-40 lg:w-48 h-11 active:filter active:brightness-75 motion-safe:transition-transform duration-200 motion-safe:transform hover:translate-x-4" style={{ backgroundImage: this.createBgImageString("white") }}>
+        <div className="p-1 pl-7 font-display text-xl text-white" style={{ backgroundImage: this.createBgImageString(this.props.color) }}>
+          {this.props.children}
         </div>
+      </div>
+    )
+    return this.props.to.toString().startsWith("https://") || this.props.to.toString().startsWith("http://") ? (
+      <a className="trapezoid-button" href={this.props.to.toString()}>
+        {linkChild}
+      </a>
+    ) : (
+      <Link className="trapezoid-button" to={this.props.to} onClick={event => this.props.onClick?.(event, this.props.to)}>
+        {linkChild}
       </Link>
     );
   }
 }
 type TrapezoidButtonProps = {
-  /** `to` prop passed to React Router's Link */
+  /** `to` prop passed to React Router's Link or an http(s) url. */
   to: LinkProps["to"],
   /** One of the tailwind theme colors */
   color: string,

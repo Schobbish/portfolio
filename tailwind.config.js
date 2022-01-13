@@ -29,8 +29,9 @@ module.exports = {
   },
   variants: {
     extend: {
-      filter: ["active"],
+      borderWidth: ["last"],
       brightness: ["active"],
+      filter: ["active"],
       opacity: ["motion-reduce"],
       transitionProperty: ["motion-reduce", "motion-safe"],
       transform: ["motion-reduce", "motion-safe"]
